@@ -1,0 +1,2 @@
+# SimpleMinifier
+Simple minifier
