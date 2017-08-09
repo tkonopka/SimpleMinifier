@@ -1,0 +1,6 @@
+# ignore netbeans development files
+/nbproject
+
+# ignore local copy of phpunit
+phpunit.phar
+
