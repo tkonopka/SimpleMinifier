@@ -21,9 +21,9 @@ final class SimpleMinifierTest extends TestCase {
 
     public function genericTest($dir, $prefix) {
         $input = file_get_contents("tests/$dir/$prefix.$dir");
-        $expected = file_get_contents("tests/$dir/$prefix.min.$dir");
-        $output = $this->_SM->minify($input);
-        $this->assertEquals(substr($expected, 0, -1), $output);
+        $expected = trim(file_get_contents("tests/$dir/$prefix.min.$dir"));
+        $output = trim($this->_SM->minify($input));
+        $this->assertEquals($expected, $output);
     }
 
     public function testJsSimple() {
@@ -41,21 +41,29 @@ final class SimpleMinifierTest extends TestCase {
     public function testJsSpacesInString() {
         $this->genericTest("js", "spacesInString");
     }
-    
+
+    public function testJsSpacesAtStartOfInString() {
+        $this->genericTest("js", "spacesAtStartOfString");
+    }
+
     public function testJsPreserveImportantComment() {
         $this->genericTest("js", "preserveImportantComment");
     }
-    
+
     public function testJsMath() {
         $this->genericTest("js", "math");
     }
-    
+
     public function testCssMultiline() {
         $this->genericTest("css", "multiline");
     }
-    
+
     public function testCssBlockComment() {
         $this->genericTest("css", "blockComment");
     }
-    
+
+    public function testCssMultiblock() {
+        $this->genericTest("css", "multiblock");
+    }
+
 }

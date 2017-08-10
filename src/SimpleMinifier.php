@@ -65,18 +65,17 @@ class SimpleMinifier {
     public function removeSpaces($data) {
         $lines = explode("\n", $data);
         $result = [];
-        // apply multi-space reduction to lines that don't have strings
         foreach ($lines as $oneline) {
-            if (strpos($oneline, "'") === false & strpos($oneline, '"') === false) {
-                // remove some spaces
+            // always remove leading spaces
+            $oneline = $this->removePattern($oneline, '~^[ ]+~', ' ');
+            // other multi-space redctions only apply to lines without strings
+            if (strpos($oneline, "'") === false & strpos($oneline, '"') === false) {                
                 $oneline = $this->removePattern($oneline, '~[ ]+~', ' ');
                 $oneline = $this->removePattern($oneline, '~ *\+ *~', '+');
                 $oneline = $this->removePattern($oneline, '~ *= *~', '=');
                 $oneline = $this->removePattern($oneline, '~ *- *~', '-');                
-                $result[] = $oneline;
-            } else {
-                $result[] = $oneline;
             }
+            $result[] = $oneline;
         }
         return implode("\n", $result);
     }
